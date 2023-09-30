@@ -9,7 +9,7 @@ import fs from 'fs'
 
 export const getCliente = async (req,res)=>{
     try{
-        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from cliente c, estado e where c.estado_idEstado=e.idEstado')
+        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from Cliente c, Estado e where c.estado_idEstado=e.idEstado')
         res.json(rows)
     }
     catch(error){
@@ -21,7 +21,7 @@ export const getCliente = async (req,res)=>{
 
 export const getClienteID = async (req,res)=>{
     try {
-        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from cliente c, estado e where c.estado_idEstado=e.idEstado and idCliente=?',[req.params.id])
+        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from Cliente c, Estado e where c.estado_idEstado=e.idEstado and idCliente=?',[req.params.id])
         if(rows.length<=0) return res.status(404).json({
             message:'No existe el usuario'
         })
@@ -37,7 +37,7 @@ export const CrearCliente = async (req,res)=>{
     try {
         const {NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado}=req.body        
         //verificando que el usuario no exista en base de datos
-        const [variable] = await pool.query('select 1 from cliente where Correo_cliente=?',[Correo_cliente]);
+        const [variable] = await pool.query('select 1 from Cliente where Correo_cliente=?',[Correo_cliente]);
         
         if(variable.length=='1') return res.status(500).json({
             message:'El cliente ya existe'
@@ -45,7 +45,7 @@ export const CrearCliente = async (req,res)=>{
         //cifrando la clave
         const hash_pass=bcrypt.hashSync(Pass_cliente,10);        
         //realizando el insert
-        await pool.query('INSERT INTO CLIENTE (NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        await pool.query('INSERT INTO Cliente (NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado) VALUES (?,?,?,?,?,?,?,?,?,?)'
         ,[NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,hash_pass,Direccion_cliente,Coord1,Coord2,Estado_idEstado])
         console.log(req.body)
         res.send('Satisfactorio')   
@@ -58,7 +58,7 @@ export const CrearCliente = async (req,res)=>{
 
 export const EliminarCliente = async (req,res)=>{
     try {
-        const [result] = await pool.query('delete from cliente where idCliente=?',[req.params.id])
+        const [result] = await pool.query('delete from Cliente where idCliente=?',[req.params.id])
         if(result.affectedRows<=0) return res.status(404).json({
             message:'No existe el usuario'
         })
@@ -77,13 +77,13 @@ export const ActualizarCliente = async (req,res)=>{
         const {NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado}=req.body
         console.log('id_cliente'+ idCliente)     
         console.log(NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado)       
-        const [result]=await pool.query('UPDATE CLIENTE SET NIT=IFNULL(?,NIT),Nombres_cliente=IFNULL(?,Nombres_cliente),Apellido_cliente=IFNULL(?,Apellido_cliente),Telefono_cliente=IFNULL(?,Telefono_cliente),Correo_cliente=IFNULL(?,Correo_cliente),Pass_cliente=IFNULL(?,Pass_cliente),Direccion_cliente=IFNULL(?,Direccion_cliente),Coord1=IFNULL(?,Coord1),Coord2=IFNULL(?,Coord2),Estado_idEstado=IFNULL(?,Estado_idEstado) WHERE IdCliente=?',
+        const [result]=await pool.query('UPDATE Cliente SET NIT=IFNULL(?,NIT),Nombres_cliente=IFNULL(?,Nombres_cliente),Apellido_cliente=IFNULL(?,Apellido_cliente),Telefono_cliente=IFNULL(?,Telefono_cliente),Correo_cliente=IFNULL(?,Correo_cliente),Pass_cliente=IFNULL(?,Pass_cliente),Direccion_cliente=IFNULL(?,Direccion_cliente),Coord1=IFNULL(?,Coord1),Coord2=IFNULL(?,Coord2),Estado_idEstado=IFNULL(?,Estado_idEstado) WHERE IdCliente=?',
         [NIT,Nombres_cliente,Apellido_cliente,Telefono_cliente,Correo_cliente,Pass_cliente,Direccion_cliente,Coord1,Coord2,Estado_idEstado,idCliente])
         console.log(result)
         if(result.affectedRows===0) return res.status(404).json({
             message:'No se actualizo el cliente'
         })
-        const [rows]= await pool.query('select c.idCliente,c.NIT,c.Nombres_cliente,c.Apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.Direccion_cliente,c.Coord1,c.Coord2,e.Nombre_estado from cliente c, estado e where c.estado_idEstado=e.idEstado and idCliente=?',[idCliente])
+        const [rows]= await pool.query('select c.idCliente,c.NIT,c.Nombres_cliente,c.Apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.Direccion_cliente,c.Coord1,c.Coord2,e.Nombre_estado from Cliente c, estado e where c.estado_idEstado=e.idEstado and idCliente=?',[idCliente])
         res.json(rows[0])        
     } catch (error) {
         return res.status(500).json({
@@ -95,7 +95,7 @@ export const ActualizarCliente = async (req,res)=>{
 
 export const getClienteReporte = async (req,res)=>{
     try{      
-        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from cliente c, estado e where c.estado_idEstado=e.idEstado')
+        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from Cliente c, estado e where c.estado_idEstado=e.idEstado')
         const html_={};
         let registro=[];
 

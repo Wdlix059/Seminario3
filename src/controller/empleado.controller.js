@@ -12,7 +12,7 @@ import jwt from 'jsonwebtoken';
 
 export const getEmpleado = async(req,res)=>{
     try{        
-        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM EMPLEADO e,perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado order by e.idEmpleado asc ')
+        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado order by e.idEmpleado asc ')
         res.json(rows)
     }
     catch(error){
@@ -24,7 +24,7 @@ export const getEmpleado = async(req,res)=>{
 
 export const getEmpleadoID = async (req,res)=>{
     try {
-        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM EMPLEADO e,perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[req.params.id])
+        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[req.params.id])
         if(rows.length<=0) return res.status(404).json({
             message:'No existe el empleado con ese código'
         })
@@ -42,7 +42,7 @@ export const CrearEmpleado = async (req,res)=>  {
        // console.log(req.body)
        // console.log(Nombre_empleado, Apellidos_empleado, Correo_empleado, Pass_empleado, Telefono_empleado, Perfil_idPerfil,Estado_idEstado)
 
-        const [variable] = await pool.query('select 1 from empleado where Correo_empleado=?',[Correo_empleado])
+        const [variable] = await pool.query('select 1 from Empleado where Correo_empleado=?',[Correo_empleado])
         //console.log(variable.length ,' +variable ',Correo_empleado)
         if(variable.length=='1') return res.status(500).json({
             message:'El usuario ya existe'
@@ -52,7 +52,7 @@ export const CrearEmpleado = async (req,res)=>  {
         console.log(hash_pass)
         //Pass_empleado=hash_pass;
         //console.log(Pass_empleado);
-       await pool.query('INSERT INTO EMPLEADO (Nombre_empleado, Apellidos_empleado, Correo_empleado, Pass_empleado, Telefono_empleado, Perfil_idPerfil, Estado_idEstado, Empleado_idEmpleado) VALUES (?,?,?,?,?,?,?,?)'
+       await pool.query('INSERT INTO Empleado (Nombre_empleado, Apellidos_empleado, Correo_empleado, Pass_empleado, Telefono_empleado, Perfil_idPerfil, Estado_idEstado, Empleado_idEmpleado) VALUES (?,?,?,?,?,?,?,?)'
        ,[Nombre_empleado, Apellidos_empleado, Correo_empleado, hash_pass, Telefono_empleado, Perfil_idPerfil,Estado_idEstado,1])
         console.log(req.body)
         //return res.status(200)
@@ -68,13 +68,13 @@ export const ActualizarEmpleado =async (req,res)=>{
         const idEmpleado = req.params.id
         const {Nombre_empleado, Apellidos_empleado, Correo_empleado, Pass_empleado, Telefono_empleado, Perfil_idPerfil,Estado_idEstado,Empleado_idEmpleado}=req.body
         console.log('id_cliente'+ idEmpleado)            
-        const [result]=await pool.query('UPDATE EMPLEADO SET Nombre_empleado=IFNULL(?,Nombre_empleado),Apellidos_empleado=IFNULL(?,Apellidos_empleado),Correo_empleado=IFNULL(?,Correo_empleado),Pass_empleado=IFNULL(?,Pass_empleado),Telefono_empleado=IFNULL(?,Telefono_empleado),Perfil_idPerfil=IFNULL(?,Perfil_idPerfil),Estado_idEstado=IFNULL(?,Estado_idEstado),Empleado_idEmpleado=IFNULL(?,Empleado_idEmpleado) WHERE idEmpleado=?',
+        const [result]=await pool.query('UPDATE Empleado SET Nombre_empleado=IFNULL(?,Nombre_empleado),Apellidos_empleado=IFNULL(?,Apellidos_empleado),Correo_empleado=IFNULL(?,Correo_empleado),Pass_empleado=IFNULL(?,Pass_empleado),Telefono_empleado=IFNULL(?,Telefono_empleado),Perfil_idPerfil=IFNULL(?,Perfil_idPerfil),Estado_idEstado=IFNULL(?,Estado_idEstado),Empleado_idEmpleado=IFNULL(?,Empleado_idEmpleado) WHERE idEmpleado=?',
         [Nombre_empleado, Apellidos_empleado, Correo_empleado, Pass_empleado, Telefono_empleado, Perfil_idPerfil,Estado_idEstado,Empleado_idEmpleado,idEmpleado])
         console.log(result)
         if(result.affectedRows===0) return res.status(404).json({
             message:'No se actualizo el cliente'
         })
-        const [rows]= await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM EMPLEADO e,perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[idEmpleado])
+        const [rows]= await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, Estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[idEmpleado])
         res.json(rows[0])        
     } catch (error) {
         return res.status(500).json({
@@ -85,7 +85,7 @@ export const ActualizarEmpleado =async (req,res)=>{
 
 export const EliminarEmpleado = async (req,res)=>{
     try {
-        const [result] = await pool.query('delete from empleado where idEmpleado=?',[req.params.id])
+        const [result] = await pool.query('delete from Empleado where idEmpleado=?',[req.params.id])
         if(result.affectedRows<=0) return res.status(404).json({
             message:'No existe el usuario'
         })
@@ -102,7 +102,7 @@ export const BuscarPerfil = async (req,res)=>  {
         const {Correo_empleado, Pass_empleado}=req.body   
         console.log(Correo_empleado,'        ',Pass_empleado);
         
-        const [variable] = await pool.query('select Pass_empleado,Perfil_idPerfil,Correo_empleado from empleado where Correo_empleado=? ',[Correo_empleado])
+        const [variable] = await pool.query('select Pass_empleado,Perfil_idPerfil,Correo_empleado from Empleado where Correo_empleado=? ',[Correo_empleado])
         console.log(variable[0]);
         const perfil = variable[0].Perfil_idPerfil;
 
@@ -129,7 +129,7 @@ export const BuscarPerfil = async (req,res)=>  {
 
 export const getEmpleadoReporte = async (req,res)=>{
     try{      
-        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM EMPLEADO e,perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado order by e.idEmpleado asc ')
+        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, Estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado order by e.idEmpleado asc ')
         const html_={};
         let registro=[];
 
