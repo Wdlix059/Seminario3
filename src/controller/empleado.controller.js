@@ -24,7 +24,7 @@ export const getEmpleado = async(req,res)=>{
 
 export const getEmpleadoID = async (req,res)=>{
     try {
-        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[req.params.id])
+        const [rows] = await pool.query('SELECT e.idEmpleado, e.Nombre_empleado, e.Apellidos_empleado,e.Correo_empleado, e.Telefono_empleado,p.Nombre_perfil,es.Nombre_estado,e.Empleado_idEmpleado FROM Empleado e,Perfil p, Estado es where e.Perfil_idPerfil =p.idPerfil and e.Estado_idEstado =es.idEstado and e.idEmpleado=?',[req.params.id])
         if(rows.length<=0) return res.status(404).json({
             message:'No existe el empleado con ese código'
         })

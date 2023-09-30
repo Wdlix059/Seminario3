@@ -95,7 +95,7 @@ export const ActualizarCliente = async (req,res)=>{
 
 export const getClienteReporte = async (req,res)=>{
     try{      
-        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from Cliente c, estado e where c.estado_idEstado=e.idEstado')
+        const [rows] = await pool.query('select c.idCliente,c.NIT,c.nombres_cliente,c.apellido_cliente,c.Telefono_cliente,c.Correo_cliente,c.direccion_cliente,c.coord1,c.coord2,e.nombre_estado from Cliente c, Estado e where c.estado_idEstado=e.idEstado')
         const html_={};
         let registro=[];
 
