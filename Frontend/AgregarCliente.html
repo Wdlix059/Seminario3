@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        if(sessionStorage.getItem("correo")==null||sessionStorage.getItem("Pefil")==null){
+              document.location.href='login.html';
+          }
+      </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Cliente</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+    <script src="./AgregarCliente.js"></script>
+</head>
+<body>
+    <style>
+        body{
+        background-color: gray;
+        color: white;
+    }
+    
+    .formulario{
+        background-color: gainsboro;
+        color: black;
+    }
+
+    h1{
+        color: black;
+        text-align: center;
+    }
+    table{
+        border: 1px solid black;
+    }
+    form{
+        text-align: center;
+    }
+    
+    </style>
+    
+    <div class="principal">
+        <h1>Agregar Cliente</h1>
+        <div class="container mt-4 shadow-lg p3 mb-5 bg-body rounded">
+            <table class="table table-bordered table-striped" >
+                <tr><td><label>NIT*</label></td><td><input type="text" class="nombre" id="NIT" placeholder="NIT"></td></tr>
+                <tr><td><label>Nombre*</label></td><td><input type="text" class="nombre" id="Nombre" placeholder="Nombre"></td></tr>
+                <tr><td><label>Apellido</label></td><td><input type="text" class="nombre" id="Apellido" placeholder="Apellido"></td></tr>
+                <tr><td><label>Teléfono*</label></td><td><input type="number" style="width: 190px" class="nombre" id="Telefono" placeholder="12345678" ></td></tr>
+                <tr><td><label>Correo*</label></td><td><input type="email" class="nombre" id="Correo" placeholder="correo@correo.com"></td></tr>
+                <tr><td><label>Contraseña*</label></td><td><input type="password" class="nombre" id="Password" placeholder="****"></td></tr>
+                <tr><td><label>Dirección*</label></td><td><input type="text" style="width: 190px" class="nombre" id="Direccion" ></td></tr>
+                <tr><td><label>Latitud*</label></td><td><input type="number" style="width: 190px" class="nombre" id="Latitud" min="8" max="12" placeholder="1.23" ></td></tr>
+                <tr><td><label>Longitud*</label></td><td><input type="number" style="width: 190px" class="nombre" id="Longitud" min="8" max="12" placeholder="1.23" ></td></tr>                
+                <tr><td><label>Estado*</label></td><td><select name="Estado" id="EstadoU" style="width: 190px" >
+                    <option value="1">Activo</option>
+                    <option value="2">Inactivo</option>                    
+                </select></td></tr>                
+            </table>
+            <form action="" class="ProgramarVisita">
+                <a  class="btn btn-primary" type="button" id="GuardarCliente">Guardar</a>
+                <a  class="btn btn-primary" type="button" id="CancelarOperacion">Cancelar</a>
+            </form>         
+        </div>
+    </div>    
+    
+</body>
+</html>
+

@@ -1,0 +1,121 @@
+
+CLIENTE
+buscar por ID
+tipo: get
+http://127.0.0.1:3000/cliente/8
+
+Busqueda general
+tipo: get
+http://127.0.0.1:3000/cliente
+
+eliminar cliente
+tipo: delete
+http://127.0.0.1:3000/cliente/9
+
+Actualizar cliente
+tipo: patch
+http://127.0.0.1:3000/cliente/9
+{    
+    "Correo_cliente": "Juan de Jesus",
+    "Nombres_cliente":"Marcos",
+    "Direccion_cliente": "Ciudad de Guatemala, zona 1"
+}
+
+Crear cliente
+tipo: post
+http://127.0.0.1:3000/Cliente
+{
+  "NIT":"21312",
+  "Nombres_cliente":"Renee",
+  "Apellido_cliente":"Solares",
+  "Telefono_cliente":"50190620",
+  "Correo_cliente":"solaresprueba@gmail.com",
+  "Pass_cliente":"pass",
+  "Direccion_cliente":"Ciudad de Guatemala, zona 16",
+  "Coord1":"2.55477",
+  "Coord2":"5.55886",
+  "Estado_idEstado":"1"
+}
+
+
+VISITA
+buscar por ID
+http://127.0.0.1:3000/visita/12
+
+Busqueda general
+http://127.0.0.1:3000/visita
+
+Eliminar
+http://127.0.0.1:3000/visita/12
+
+Actualizar
+tipo: patch
+http://127.0.0.1:3000/visita/12
+
+{
+    "idEmpleado":"3", 
+    "idEstado_Visita":"3",
+    "idCliente":"5", 
+    "Descripcion_visita":"Prueba registro", 
+    "Resultado_visita":"resultado", 
+    "Fecha_visita":"18/09/2023 12:30am"
+}
+
+
+
+
+
+Crear
+http://127.0.0.1:3000/visita
+
+{
+    "idEmpleado":"3", 
+    "idEstado_Visita":"1",
+    "idCliente":"6", 
+    "Descripcion_visita":"Prueba registro", 
+    "Resultado_visita":"resultado", 
+    "Fecha_visita":"15/09/2023"
+}
+
+
+EMPLEADO
+buscar empleado
+http://127.0.0.1:3000/empleado
+
+
+buscar por id
+http://127.0.0.1:3000/empleado/11
+
+eliminar empleado
+http://127.0.0.1:3000/empleado/5
+
+actualiza empleado
+http://127.0.0.1:3000/empleado/5
+  {
+      "Perfil_idPerfil":"1",
+      "Telefono_empleado":"78787898",
+        "Estado_idEstado":"2"
+  }
+  
+Crear empleado
+http://127.0.0.1:3000/empleado
+{
+  "Nombre_empleado":"Danilo",
+  "Apellidos_empleado":"de la Cruz",
+  "Correo_empleado":"wdlixdel@miumg.edu.gt",
+  "Pass_empleado":"pass",
+  "Telefono_empleado":"45645645",
+  "Perfil_idPerfil":"3",
+  "Estado_idEstado":"1"
+}
+
+LOGIN
+http://localhost:3000/login
+{
+  "Correo_empleado":"wlixd@miumg.edu.gt",
+  "Pass_empleado":"pass"
+}
+
+
+
+

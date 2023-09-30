@@ -1,0 +1,16 @@
+body {
+  background-color: black;
+}
+
+.login {
+  text-align: center;
+  background-color: black;
+  font-style: normal;
+  color: greenyellow;
+  font: 2.5em;
+}
+
+.administrador {
+  color: greenyellow;
+  text-align: center;
+}/*# sourceMappingURL=main.css.map */
