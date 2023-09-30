@@ -3,9 +3,9 @@ import { pool } from "../db.js"
 export const getVisita =async (req,res)=>{
     try{
         //const [rows] = await pool.query('SELECT * FROM VISITA')
-        const l1='SELECT V.IdVisita,concat(E.Nombre_empleado,\' \',E.Apellidos_empleado) Empleado,ev.Estado_Visita,'
+        const l1='SELECT v.IdVisita,concat(E.Nombre_empleado,\' \',E.Apellidos_empleado) Empleado,ev.Estado_Visita,'
         const l2='  concat( c.Nombres_cliente,\' \',c.Apellido_cliente) Cliente, v.Descripcion_visita,v.Resultado_visita,'
-        const l3=' v.Fecha_visita FROM Visita V, Empleado E, Estado_Visita ev, Cliente c where v.idEmpleado =e.idEmpleado '
+        const l3=' v.Fecha_visita FROM Visita v, Empleado E, Estado_Visita ev, Cliente c where v.idEmpleado =E.idEmpleado  '
         const l4=' and v.idEstado_Visita =ev.idEstado_Visita and v.idCliente =c.idCliente order by v.IdVisita asc'
         
         const [rows] = await pool.query(l1+l2+l3+l4);
